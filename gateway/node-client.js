@@ -20,8 +20,6 @@ ddpclient.connect(function(error) {
   
   console.log('connected to Meteor!');
 
-  var last = 0;
-
   var serialport = require("serialport");
   var SerialPort = serialport.SerialPort; // localize object constructor
   var serialPort = new SerialPort("/dev/ttyACM0", {
