@@ -1,7 +1,25 @@
+var fs = require('fs');
+var parse = require('csv-parse');
+var transform = require('stream-transform');
+
+var output = [];
+var parser = parse({delimiter: ','})
+var input = fs.createReadStream('/etc/passwd');
+var transformer = transform(function(record, callback){
+  setTimeout(function(){
+    callback(null, record.join(' ')+'\n');
+  }, 500);
+}, {parallel: 10});
+input.pipe(parser).pipe(transformer).pipe(process.stdout);
+
+
+
+
+
 var DDPClient = require("ddp");
 
 var ddpclient = new DDPClient({
-  host: "localhost", 
+  host: "localhost",
   port: 3000,
   /* optional: */
   auto_reconnect: true,
@@ -17,12 +35,13 @@ ddpclient.connect(function(error) {
     console.log('DDP connection error!');
     return;
   }
-  
+
   console.log('connected to Meteor!');
 
   var serialport = require("serialport");
   var SerialPort = serialport.SerialPort; // localize object constructor
-  var serialPort = new SerialPort("/dev/ttyACM0", {
+  // var serialPort = new SerialPort("/dev/ttyACM0", {
+  var serialPort = new SerialPort("/dev/cu.usbmodem1411", {
     //parser: serialport.parsers.readline("\n"),
     baudrate: 115200
   });
