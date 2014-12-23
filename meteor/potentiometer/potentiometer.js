@@ -6,7 +6,6 @@ if (Meteor.isClient) {
   };
 }
 
-
 if (Meteor.isServer) {
   if (Values.find().count() === 0) {
     Values.insert({value: 0});
