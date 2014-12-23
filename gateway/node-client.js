@@ -22,9 +22,9 @@ ddpclient.connect(function(error) {
 
   var serialport = require("serialport");
   var SerialPort = serialport.SerialPort; // localize object constructor
-  // var serialPort = new SerialPort("/dev/ttyACM0", {
-  var serialPort = new SerialPort("/dev/cu.usbmodem1411", {
-    //parser: serialport.parsers.readline("\n"),
+  var serialPort = new SerialPort("/dev/ttyACM0", {
+  // var serialPort = new SerialPort("/dev/cu.usbmodem1411", { // KyleKing's port
+    parser: serialport.parsers.readline("\n"),
     baudrate: 115200
   });
 

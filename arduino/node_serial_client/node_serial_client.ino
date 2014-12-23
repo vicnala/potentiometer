@@ -1,17 +1,17 @@
 int val;
 int last;
 
-void setup() 
-{ 
-  Serial.begin(115200); 
+void setup()
+{
+  Serial.begin(115200);
 }
 
-void loop() 
+void loop()
 {
   val = analogRead(2);
-  if (val != last) {
+  // if (val != last) {
     last = val;
-    Serial.write(val);
-  }
+    Serial.println(val);
+  // }
   delay(100);
 }
