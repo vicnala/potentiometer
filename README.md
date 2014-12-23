@@ -8,7 +8,7 @@ Arduino
 
 Connect a potentiometer to your [Arduino](http://www.arduino.cc/) board.
 
-![Connecting a potentiometer to Arduino](http://arduino.cc/en/uploads/Tutorial/potentiometer.jpg "Connecting a potentiometer to Arduino")
+![Connecting a potentiometer to Arduino and Servo](README IMAGEs/wiring.png)
 
 Then upload the Arduino sketch `arduino/node_serial_client/node_serial_client.ino`:
 
@@ -144,6 +144,8 @@ $ npm install serialport
 
 The client node app
 -------------------
+
+Using: https://github.com/voodootikigod/node-serialport with lots of examples!
 
 ~~~js
 var DDPClient = require("ddp");

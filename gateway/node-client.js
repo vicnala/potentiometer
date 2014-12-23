@@ -1,7 +1,7 @@
 var DDPClient = require("ddp");
 
 var ddpclient = new DDPClient({
-  host: "localhost", 
+  host: "localhost",
   port: 3000,
   /* optional: */
   auto_reconnect: true,
@@ -17,13 +17,14 @@ ddpclient.connect(function(error) {
     console.log('DDP connection error!');
     return;
   }
-  
+
   console.log('connected to Meteor!');
 
   var serialport = require("serialport");
   var SerialPort = serialport.SerialPort; // localize object constructor
   var serialPort = new SerialPort("/dev/ttyACM0", {
-    //parser: serialport.parsers.readline("\n"),
+  // var serialPort = new SerialPort("/dev/cu.usbmodem1411", { // KyleKing's port
+    parser: serialport.parsers.readline("\n"),
     baudrate: 115200
   });
 

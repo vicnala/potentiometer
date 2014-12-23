@@ -14,9 +14,9 @@ if (Meteor.isServer) {
 
   Meteor.methods({
     'push': function (value) {
-      console.log(value['0']);
+      console.log(value);
       var record = Values.findOne();
-      Values.update(record, {$set: {value: value['0']}});
+      Values.update(record, {$set: {value: value}});
       return "ok";
     }
   });
