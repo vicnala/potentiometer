@@ -4,8 +4,24 @@
 </head>
 
 <body>
+  <h2>Time Series Test</h2>
+  {{> timeseries}}
+  <h2>Value Control</h2>
   {{> value}}
 </body>
+
+<template name="timeseries">
+  <!-- <h2>{{timeseries.value[1]}} - one</h2> -->
+  <h2>{{timeseries.value.zero}} - zero</h2>
+  <h2>{{timeseries.value.one}} - one</h2>
+  <h2>{{timeseries.value.two}} - two</h2>
+  <h2>{{timeseries.value.three}} - three</h2>
+  <h2>{{timeseries.value.four}} - four</h2>
+  <h2>{{timeseries.value.five}} - five</h2>
+  <h2>{{timeseries.value.six}} - six</h2>
+  <h2>{{timeseries.value.seven}} - seven</h2>
+  <h2>{{timeseries.value.eight}} - eight</h2>
+</template>
 
 <template name="value">
   <h1>{{value.value}}</h1>

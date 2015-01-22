@@ -23,7 +23,7 @@ ddpclient.connect(function(error) {
   var serialport = require("serialport");
   var SerialPort = serialport.SerialPort; // localize object constructor
   // var serialPort = new SerialPort("/dev/ttyACM0", {
-  var serialPort = new SerialPort("/dev/cu.usbmodem1411", {
+  var serialPort = new SerialPort("/dev/cu.usbmodem14211", {
     baudrate: 115200,
     // look for return and newline at the end of each data packet:
     parser: serialport.parsers.readline("\r\n")
@@ -37,7 +37,10 @@ ddpclient.connect(function(error) {
     // console.log(data);
     console.log('data received: ' + data);
     ddpclient.call('push', [data], function(err, result) {
-      console.log('called function, result: ' + result);
+      console.log('called push function, result: ' + result);
+    });
+    ddpclient.call('loop', [data], function(err, result) {
+      console.log('called Loop function, result: ' + result);
     });
   }
   function showPortClose() { console.log('port closed.'); }
