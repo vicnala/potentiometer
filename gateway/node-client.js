@@ -1,4 +1,5 @@
 var DDPClient = require("ddp");
+var currentPort = "/dev/cu.usbmodem1421";
 
 var ddpclient = new DDPClient({
   host: "localhost",
@@ -23,7 +24,7 @@ ddpclient.connect(function(error) {
   var serialport = require("serialport");
   var SerialPort = serialport.SerialPort; // localize object constructor
   // var serialPort = new SerialPort("/dev/ttyACM0", {
-  var serialPort = new SerialPort("/dev/cu.usbmodem14211", {
+  var serialPort = new SerialPort(currentPort, {
     baudrate: 115200,
     // look for return and newline at the end of each data packet:
     parser: serialport.parsers.readline("\r\n")
