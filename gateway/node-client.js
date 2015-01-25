@@ -37,8 +37,13 @@ ddpclient.connect(function(error) {
 
   function showPortOpen() { console.log('port open. Data rate: ' + serialPort.options.baudRate); }
   function saveLatestData(data) {
-    // Error Checking
+    // See what data comes through
     console.log('data received: ' + data);
+    var array = data.split(','); // CSV Data Parse:
+    // Print each parsed data
+    for (var i = 0; i < array.length; i++) {
+       console.log('data parsed: ' + array[i] + ' of ' + i);
+    }
 
     // Push data to Arduino
     // var spin = data + 10;
@@ -48,9 +53,6 @@ ddpclient.connect(function(error) {
     //   console.log('err ' + err);
     //   console.log('results ' + results);
     // });
-
-    // CSV Data Parse:
-    var array = data.split(',');
 
     // Call Meteor actions with "data"
     ddpclient.call('push', [data], function(err, result) {
