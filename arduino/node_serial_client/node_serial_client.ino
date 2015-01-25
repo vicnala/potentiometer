@@ -27,8 +27,8 @@ void loop()
    } else {
      counter = counter +1;
    }
-   // Serial.print(counter);
-   // Serial.print(",");
+   Serial.print(counter);
+   Serial.print(",");
 
    val = analogRead(2);
    Serial.println(val);
@@ -43,7 +43,7 @@ void loop()
       // myservo.write(serialPos);
    // }
 
-   delay(1500);
+   delay(500);
 }
 
 // SerialEvent occurs whenever a new data comes in the hardware serial RX.  This routine is run between each time loop() runs, so using delay inside loop can delay response.  Multiple bytes of data may be available.

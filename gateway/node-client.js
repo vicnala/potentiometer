@@ -49,11 +49,14 @@ ddpclient.connect(function(error) {
     //   console.log('results ' + results);
     // });
 
+    // CSV Data Parse:
+    var array = data.split(',');
+
     // Call Meteor actions with "data"
     ddpclient.call('push', [data], function(err, result) {
       console.log('called push function, result: ' + result);
     });
-    ddpclient.call('loop', [data], function(err, result) {
+    ddpclient.call('loop', [array], function(err, result) {
       console.log('called Loop function, result: ' + result);
     });
   }

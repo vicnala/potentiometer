@@ -11,6 +11,7 @@
 </body>
 
 <template name="timeseries">
+  <h2>{{timeseries.counter}} - counter</h2>
   <h2>{{timeseries.value.[0]}} - zero</h2>
   <h2>{{timeseries.value.[1]}} - one</h2>
   <h2>{{timeseries.value.[2]}} - two</h2>
@@ -25,3 +26,6 @@
 <template name="value">
   <h1>{{value.value}}</h1>
 </template>
+
+
+<!-- Note: Access timeseries data in browser console through: TimeSeries.findOne().value[2] -->

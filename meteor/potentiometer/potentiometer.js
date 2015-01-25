@@ -34,35 +34,116 @@ if (Meteor.isServer) {
     'loop': function (value) {
       console.log("Node Value: " + value); // piped to shell
       var record = TimeSeries.findOne();
-      // var stringLS = "value.0";
-      // TimeSeries.update(record, {$set: {stringLS: value}});
 
-      // console.log("counter: " + record.value[1]); // piped to shell
-      console.log("counter: " + record.counter); // piped to shell
-      if (record.counter === 0) {
-        TimeSeries.update(record, {$set: {"value.0": value}});
-      } else if (record.counter === 1) {
-        TimeSeries.update(record, {$set: {"value.1": value}});
-      } else if (record.counter === 2) {
-        TimeSeries.update(record, {$set: {"value.2": value}});
-      } else if (record.counter === 3) {
-        TimeSeries.update(record, {$set: {"value.3": value}});
-      } else if (record.counter === 4) {
-        TimeSeries.update(record, {$set: {"value.4": value}});
-      } else if (record.counter === 5) {
-        TimeSeries.update(record, {$set: {"value.5": value}});
-      } else if (record.counter === 6) {
-        TimeSeries.update(record, {$set: {"value.6": value}});
-      } else if (record.counter === 7) {
-        TimeSeries.update(record, {$set: {"value.7": value}});
-      } else if (record.counter === 8) {
-        TimeSeries.update(record, {$set: {"value.8": value}});
-        TimeSeries.update(record, {$set: {counter: 0}});
+      // TimeSeries.update(record, {$set: {"value.0": value[1]}});
+      counter = parseFloat(value[0]);
+      // TimeSeries.update(record, {$set: {counter: counter}});
+
+      if (counter === 0) {
+        TimeSeries.update(
+          record,
+          {$set:
+            {
+              "value.0": value[1],
+              counter: counter
+            }
+          });
+        console.log("success: " + 0 + "*"); // piped to shell
+      } else if (counter === 1) {
+        TimeSeries.update(
+          record,
+          {$set:
+            {
+              "value.1": value[1],
+              counter: counter
+            }
+          });
+        console.log("success: " + 1 + "*"); // piped to shell
+      } else if (counter === 2) {
+        TimeSeries.update(
+          record,
+          {$set:
+            {
+              "value.2": value[1],
+              counter: counter
+            }
+          });
+        console.log("success: " + 2 + "*"); // piped to shell
+      } else if (counter === 3) {
+        TimeSeries.update(
+          record,
+          {$set:
+            {
+              "value.3": value[1],
+              counter: counter
+            }
+          });
+        console.log("success: " + 3 + "*"); // piped to shell
+      } else if (counter === 4) {
+        TimeSeries.update(
+          record,
+          {$set:
+            {
+              "value.4": value[1],
+              counter: counter
+            }
+          });
+        console.log("success: " + 4 + "*"); // piped to shell
+      } else if (counter === 5) {
+        TimeSeries.update(
+          record,
+          {$set:
+            {
+              "value.5": value[1],
+              counter: counter
+            }
+          });
+        console.log("success: " + 5 + "*"); // piped to shell
+      } else if (counter === 6) {
+        TimeSeries.update(
+          record,
+          {$set:
+            {
+              "value.6": value[1],
+              counter: counter
+            }
+          });
+        console.log("success: " + 6 + "*"); // piped to shell
+      } else if (counter === 7) {
+        TimeSeries.update(
+          record,
+          {$set:
+            {
+              "value.7": value[1],
+              counter: counter
+            }
+          });
+        console.log("success: " + 7 + "*"); // piped to shell
+      } else if (counter === 8) {
+        TimeSeries.update(
+          record,
+          {$set:
+            {
+              "value.8": value[1],
+              counter: counter
+            }
+          });
+        console.log("success: " + 8 + "*"); // piped to shell
+        // TimeSeries.update(record, {$set: {counter: 0}}); // Reset Mongo-counter
       } else {
-        return "not ok, error in record.counter";
-        TimeSeries.update(record, {$set: {counter: 0}});
+        return "not ok, error in counter";
+        // TimeSeries.update(record, {$set: {counter: 0}}); // Reset Mongo-counter
       }
-      TimeSeries.update(record, {$inc: {counter: 1 }});
+      // Update Mongo-counter
+      // This doesn't work for some reason...replaced with data piped from Arduino
+      // Might take too long to increase value or it is failing intermittently
+      // TimeSeries.update(record, {$inc: {counter: 1}});
+      // The last mongo update won't always run if it is directly followed by return
+
+      // Check values
+      // console.log("counter: " + record.value[1]); // piped to shell
+      console.log("counter: " + counter); // piped to shell
+      console.log("data: " + value[1]); // piped to shell
       return "ok";
     }
   });
