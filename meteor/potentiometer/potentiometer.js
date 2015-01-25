@@ -1,6 +1,7 @@
 // Time series data
 TimeSeries = new Meteor.Collection('timeseries');
 
+// Return the data to Meteor
 if (Meteor.isClient) {
   Template.timeseries.helpers({
     timeseries: function () {
@@ -35,7 +36,6 @@ if (Meteor.isServer) {
       var record = TimeSeries.findOne();
       // var stringLS = "value.0";
       // TimeSeries.update(record, {$set: {stringLS: value}});
-      TimeSeries.update(record, {$set: {"value.0": value}});
 
       // console.log("counter: " + record.value[1]); // piped to shell
       console.log("counter: " + record.counter); // piped to shell
