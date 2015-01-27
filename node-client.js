@@ -46,15 +46,6 @@ ddpclient.connect(function(error) {
        console.log('data point ' + i + ' parsed: ' + array[i]);
     }
 
-    // Push data to Arduino
-    // var spin = data + 10;
-    // serialPort.write(spin);
-    // Copied from the documentation - use at own risk
-    // serialPort.write(spin, function(err, results) {
-    //   console.log('err ' + err);
-    //   console.log('results ' + results);
-    // });
-
     // Call Meteor actions with "data"
     ddpclient.call('push', [data], function(err, result) {
       console.log('called push function, result: ' + result);

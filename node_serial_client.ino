@@ -1,10 +1,5 @@
 // To test the ability to set the motor by the switch and then by meteor:
 
-// // servo
-// #include <Servo.h>
-// Servo myservo;  // create servo object to control a servo
-// int serialPos = 0;    // variable to store the servo position
-
 // Switch
 int val;
 int last;
@@ -33,32 +28,5 @@ void loop()
    val = analogRead(2);
    Serial.println(val);
 
-   // To deal with repetive values:
-   // if (val != last) {
-      // last = val;
-      // Serial.println(val);
-
-      // Spin the servo based on potentiometer values
-      // serialPos = val;
-      // myservo.write(serialPos);
-   // }
-
    delay(500);
 }
-
-// SerialEvent occurs whenever a new data comes in the hardware serial RX.  This routine is run between each time loop() runs, so using delay inside loop can delay response.  Multiple bytes of data may be available.
-
-// void serialEvent() {
-
-//    while (Serial.available()) {
-//       // get the new byte:
-//       int serialPos = Serial.parseInt();
-
-//       // // Print out results
-//       // String disp = "serialPos = ";
-//       // disp.concat(serialPos);
-//       // Serial.println(disp);
-
-//       myservo.write(serialPos);      // tell servo to go to position in variable 'serialPos'
-//    }
-// }
