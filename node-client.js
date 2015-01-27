@@ -47,9 +47,6 @@ ddpclient.connect(function(error) {
     }
 
     // Call Meteor actions with "data"
-    ddpclient.call('push', [data], function(err, result) {
-      console.log('called push function, result: ' + result);
-    });
     ddpclient.call('loop', [array], function(err, result) {
       console.log('called Loop function, result: ' + result);
     });

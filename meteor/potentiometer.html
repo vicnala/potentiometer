@@ -4,15 +4,13 @@
 </head>
 
 <body>
-  <h2>Time Series Test</h2>
+  <h2>Time Series Test:</h2>
   {{> timeseries}}
-  <h2>Value Control</h2>
-  {{> value}}
 </body>
 
 <template name="timeseries">
   {{#each timeseries.value}}
-    <h2>{{this}}</h2>
+    <p>{{this}}</p>
   {{/each}}
 </template>
 

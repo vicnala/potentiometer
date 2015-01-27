@@ -17,7 +17,7 @@ void setup()
 void loop()
 {
    // Update Counter Variable
-   if (counter == 8) {
+   if (counter == 25) {
      counter = 0;
    } else {
      counter = counter +1;
@@ -28,5 +28,5 @@ void loop()
    val = analogRead(2);
    Serial.println(val);
 
-   delay(500);
+   delay(100);
 }
