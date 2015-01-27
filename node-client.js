@@ -1,7 +1,7 @@
 // Name serial port - there should be a smarter way to do this, but this seems easiest
 // var currentPort = "/dev/ttyACM0"; // A PC serial port
-var currentPort = "/dev/cu.usbmodem" + "1411"; // direct left port
-// var currentPort = "/dev/cu.usbmodem" + "1421"; // direct right port
+// var currentPort = "/dev/cu.usbmodem" + "1411"; // direct left port
+var currentPort = "/dev/cu.usbmodem" + "1421"; // direct right port
 
 var DDPClient = require("ddp");
 
