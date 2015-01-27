@@ -1,0 +1,18 @@
+<head>
+  <title>Potentiometer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <h2>Time Series Test:</h2>
+  {{> timeseries}}
+</body>
+
+<template name="timeseries">
+  {{#each timeseries.value}}
+    <p>{{this}}</p>
+  {{/each}}
+</template>
+
+
+<!-- Note: Access timeseries data in browser console through: TimeSeries.findOne().value[2] -->
