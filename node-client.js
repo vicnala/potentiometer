@@ -43,7 +43,7 @@ ddpclient.connect(function(error) {
     var array = data.split(','); // CSV Data Parse:
     // Print each parsed data
     for (var i = 0; i < array.length; i++) {
-       console.log('data parsed: ' + array[i] + ' of ' + i);
+       console.log('data point ' + i + ' parsed: ' + array[i]);
     }
 
     // Push data to Arduino
