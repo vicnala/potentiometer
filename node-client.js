@@ -1,10 +1,12 @@
 // Name serial port - there should be a smarter way to do this, but this seems easiest
 // var currentPort = "/dev/ttyACM0"; // A PC serial port
-// var currentPort = "/dev/cu.usbmodem" + "1411"; // direct left port
+var currentPort = "/dev/cu.usbmodem" + "1411"; // direct left port
 // var currentPort = "/dev/cu.usbmodem" + "1421"; // direct right port
-var currentPort = "/dev/cu.usbmodem" + "14211"; // indirect right port: closest to aux power
+// var currentPort = "/dev/cu.usbmodem" + "14211"; // indirect right port: closest to aux power
 
 var DDPClient = require("ddp");
+var moment = require('moment');
+moment().format();
 
 // Connect to Meteor
 var ddpclient = new DDPClient({
@@ -45,6 +47,15 @@ ddpclient.connect(function(error) {
     for (var i = 0; i < array.length; i++) {
        console.log('data point ' + i + ' parsed: ' + array[i]);
     }
+   // Get current time
+   var now = moment().get('second');
+   console.log(now);
+   // Extend the array:
+   console.log(array);
+   console.log(i);
+   array.push(now);
+   // array(i) = now;
+   console.log(array);
 
     // Call Meteor actions with "data"
     ddpclient.call('loop', [array], function(err, result) {

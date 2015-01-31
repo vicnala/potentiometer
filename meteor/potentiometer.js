@@ -20,11 +20,18 @@ if (Meteor.isServer) {
 
   Meteor.methods({
     'loop': function (value) {
+      // Use time counter:
+      // counter = parseFloat(value[0]);
+      counter = value[2];
       // Prepare to udpate MongoDB
       var fields = {};
-      counter = parseFloat(value[0]);
       fields["value." + counter] = value[1];
-      fields["counter"] = counter;
+      // Fix undefined mongodb error of poorly formatted date info
+      if (counter === undefined) {
+        return "time issue";
+      } else {
+        fields["counter"] = counter;
+      }
 
       // Update MongoDB data
       var record = TimeSeries.findOne();
