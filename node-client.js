@@ -60,23 +60,23 @@ ddpclient.connect(function(error) {
     // Clean up string array into a set of numbers and account for any NaN conversion issues:
     var cleanArray = [];
     var countError = 0;
-    for (var i = 0; i < array.length; i++) {
-      cleanArray[i] =  parseFloat(array[i]);
-      // console.log(i + ' at: ' + cleanArray[i]);
-      if (~~cleanArray[i] === 0) {
+    for (var count = 0; count < array.length; count++) {
+      cleanArray[count] =  parseFloat(array[count]);
+      // console.log(count + ' at: ' + cleanArray[count]);
+      if (~~cleanArray[count] === 0) {
         // console.log("*****************NaN PROBLEM*****************");
         countError++;
-      };
-    };
+      }
+    }
 
     if (countError === 0) { // no number errors
       // Call Meteor actions with "data"
-      ddpclient.call('loop', [cleanArray], function(err, result) {
+      ddpclient.call('loop', [cleanArray, schema], function(err, result) {
         console.log('data sent: ' + cleanArray);
         console.log('called Loop function, result: ' + result);
         console.log(' ');
       });
-    };
+    }
 
   }
 

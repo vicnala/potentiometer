@@ -30,12 +30,11 @@ if (Meteor.isServer) {
       }
       // Prepare to udpate MongoDB
       var fields = {};
-      console.log("value." + cleanArray[0]);
-      fields["value." + cleanArray[0]] = cleanArray[1];
-      fields["counter"] = cleanArray[0];
+      fields["Lat." + cleanArray[4]] = cleanArray[1];
+      fields["Long." + cleanArray[4]] = cleanArray[2];
 
       // Update MongoDB data
-      var record = TimeSeries.findOne();
+      var record = TimeSeries.findOne({Bike: cleanArray[0]});
       TimeSeries.update(
         record,
         { $set: fields }
