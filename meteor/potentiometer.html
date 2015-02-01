@@ -9,12 +9,12 @@
 </body>
 
 <template name="timeseries">
-  <h2>Bike Number {{timeseries.Bike}}</h2>
-  <h3>Lat</h3>
+  <h3>Bike Number {{timeseries.Bike}} on Day: {{timeseries.DD}}, {{timeseries.MM}}, {{timeseries.YYYY}}</h3>
+  <h4>Lat</h4>
   {{#each timeseries.Lat}}
     <p>{{this}}</p>
   {{/each}}
-  <h3>Long</h3>
+  <h4>Long</h4>
   {{#each timeseries.Long}}
     <p>{{this}}</p>
   {{/each}}

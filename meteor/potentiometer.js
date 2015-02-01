@@ -5,7 +5,7 @@ if (Meteor.isClient) {
   Template.timeseries.helpers({
     timeseries: function () {
       Session.set("currentBike", 4);
-      return TimeSeries.findOne({Bike: Session.get("currentBike")});
+      return TimeSeries.findOne({Bike: Session.get("currentBike"), DD: 1});
     }
   });
 }
@@ -14,12 +14,17 @@ if (Meteor.isServer) {
   // Insert database of bikes for first commit
   if (TimeSeries.find().count() === 0) {
     for (var i = 0; i < 10; i++) {
-      var filler = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-      TimeSeries.insert({
-        Bike: i,
-        Lat: filler,
-        Long: filler
-      });
+      for (var d = 0; d < 30; d++) {
+        var filler = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        TimeSeries.insert({
+          Bike: i,
+          YYYY: 2014,
+          MM: 2,
+          DD: d,
+          Lat: filler,
+          Long: filler
+        });
+      }
     }
   }
 
