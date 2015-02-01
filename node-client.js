@@ -46,16 +46,18 @@ ddpclient.connect(function(error) {
     // console.log('data received: ' + data);
     var array = data.split(','); // CSV Data Parse:
     // Print each parsed data
-    var schema = ['Bike Number', 'Lat', 'Long', 'Potentiometer', "time (s)", "time (ms)"];
+    var schema = ['Bike Number', 'Lat', 'Long', 'Potentiometer', "time (s)", "time (mm)", "time (HH)", "time (DD)", "time (MM)", "time (YYYY)"];
     for (var i = 0; i < array.length; i++) {
        // console.log(i + ' = ' + schema[i] + ' : ' + array[i]);
     }
 
     // Get current time data
-    var nowSecond = moment().get('second'); // console.log(now);
-    array.push(nowSecond); // Extend the array:
-    var nowMillisecond = moment().get('millisecond'); // console.log(now);
-    array.push(nowMillisecond); // Extend the array:
+    var testTime = moment().format("ss-mm-HH-DD-MM-YYYY");
+    var splitTime = testTime.split('-'); // dash date data parse
+    for (var t = 0; t < splitTime.length; t++) {
+      // console.log(t + ' = ' + splitTime[t]);
+      array.push(splitTime[t]); // Extend the array:
+    }
 
     // Clean up string array into a set of numbers and account for any NaN conversion issues:
     var cleanArray = [];
