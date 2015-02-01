@@ -9,7 +9,13 @@
 </body>
 
 <template name="timeseries">
-  {{#each timeseries.value}}
+  <h2>Bike Number {{timeseries.Bike}}</h2>
+  <h3>Lat</h3>
+  {{#each timeseries.Lat}}
+    <p>{{this}}</p>
+  {{/each}}
+  <h3>Long</h3>
+  {{#each timeseries.Long}}
     <p>{{this}}</p>
   {{/each}}
 </template>
