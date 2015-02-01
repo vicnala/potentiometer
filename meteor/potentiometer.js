@@ -20,30 +20,22 @@ if (Meteor.isServer) {
 
   Meteor.methods({
     'loop': function (value) {
-      // Use time counter:
-      // counter = parseFloat(value[0]);
-      counter = value[2];
       // Prepare to udpate MongoDB
       var fields = {};
-      fields["value." + counter] = value[1];
-      // Fix undefined mongodb error of poorly formatted date info
-      if (counter === undefined) {
-        return "time issue";
-      } else {
-        fields["counter"] = counter;
-      }
+      fields["value." + value[0]] = value[1];
+      fields["counter"] = value[0];
 
       // Update MongoDB data
-      var record = TimeSeries.findOne();
-      TimeSeries.update(
-        record,
-        { $set: fields }
-      );
+      // var record = TimeSeries.findOne();
+      // TimeSeries.update(
+      //   record,
+      //   { $set: fields }
+      // );
 
       // Check values
       // console.log("Node Value: " + value); // piped to shell
       // console.log("counter: " + record.value[1]); // piped to shell
-      console.log("counter: " + counter); // piped to shell
+      // console.log("counter: " + counter); // piped to shell
       console.log("data: " + value[1]); // piped to shell
       return "ok";
     }

@@ -1,8 +1,8 @@
 // Name serial port - there should be a smarter way to do this, but this seems easiest
 // var currentPort = "/dev/ttyACM0"; // A PC serial port
-var currentPort = "/dev/cu.usbmodem" + "1411"; // direct left port
+// var currentPort = "/dev/cu.usbmodem" + "1411"; // direct left port
 // var currentPort = "/dev/cu.usbmodem" + "1421"; // direct right port
-// var currentPort = "/dev/cu.usbmodem" + "14211"; // indirect right port: closest to aux power
+var currentPort = "/dev/cu.usbmodem" + "14211"; // indirect right port: closest to aux power
 
 var DDPClient = require("ddp");
 var moment = require('moment');
@@ -35,32 +35,49 @@ ddpclient.connect(function(error) {
   var serialPort = new SerialPort(currentPort, {
     baudrate: 115200,
     // look for return and newline at the end of each data packet:
-    parser: serialport.parsers.readline("\r\n")
+    // parser: serialport.parsers.readline("\r\n")
+    // look for ; character to signify end of line
+    parser: serialport.parsers.readline(";")
   });
 
   function showPortOpen() { console.log('port open. Data rate: ' + serialPort.options.baudRate); }
   function saveLatestData(data) {
     // See what data comes through
-    console.log('data received: ' + data);
+    // console.log('data received: ' + data);
     var array = data.split(','); // CSV Data Parse:
     // Print each parsed data
+    var schema = ['Bike Number', 'Lat', 'Long', 'Potentiometer', "time (s)", "time (ms)"];
     for (var i = 0; i < array.length; i++) {
-       console.log('data point ' + i + ' parsed: ' + array[i]);
+       // console.log(i + ' = ' + schema[i] + ' : ' + array[i]);
     }
-   // Get current time
-   var now = moment().get('second');
-   console.log(now);
-   // Extend the array:
-   console.log(array);
-   console.log(i);
-   array.push(now);
-   // array(i) = now;
-   console.log(array);
 
-    // Call Meteor actions with "data"
-    ddpclient.call('loop', [array], function(err, result) {
-      console.log('called Loop function, result: ' + result);
-    });
+    // Get current time data
+    var nowSecond = moment().get('second'); // console.log(now);
+    array.push(nowSecond); // Extend the array:
+    var nowMillisecond = moment().get('millisecond'); // console.log(now);
+    array.push(nowMillisecond); // Extend the array:
+
+    // Clean up string array into a set of numbers and account for any NaN conversion issues:
+    var cleanArray = [];
+    var countError = 0;
+    for (var i = 0; i < array.length; i++) {
+      cleanArray[i] =  parseFloat(array[i]);
+      // console.log(i + ' at: ' + cleanArray[i]);
+      if (~~cleanArray[i] === 0) {
+        // console.log("*****************NaN PROBLEM*****************");
+        countError++;
+      };
+    };
+
+    if (countError === 0) { // no number errors
+      // Call Meteor actions with "data"
+      ddpclient.call('loop', [cleanArray], function(err, result) {
+        console.log('data sent: ' + cleanArray);
+        console.log('called Loop function, result: ' + result);
+        console.log(' ');
+      });
+    };
+
   }
 
   // Error Checking
