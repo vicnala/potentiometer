@@ -1,5 +1,4 @@
 Meteor.subscribe("BikeData");
-    console.log("Hi!");
 
 // Return data for the html template
 Template.bikedataTemp.helpers({
