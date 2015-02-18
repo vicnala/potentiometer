@@ -1,4 +1,3 @@
-
 if (Meteor.isServer) {
   Meteor.publish("lineDemoData", function() {
     return lineDemo.find();

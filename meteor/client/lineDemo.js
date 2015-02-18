@@ -4,18 +4,19 @@ function buildSpline(splineData) {
           type: 'spline',
           animation: Highcharts.svg, // don't animate in old IE
           marginRight: 10,
-          events: {
-              load: function () {
+          // events: {
+          //     load: function () {
 
-                  // set up the updating of the chart each second
-                  var series = this.series[0];
-                  setInterval(function () {
-                      var x = (new Date()).getTime(), // current time
-                          y = Math.random();
-                      series.addPoint([x, y], true, true);
-                  }, 1000);
-              }
-          }
+          //         // set up the updating of the chart each second
+          //         var series = this.series[0];
+          //         console.log(this);
+          //         setInterval(function () {
+          //             var x = (new Date()).getTime(), // current time
+          //                 y = Math.random();
+          //             series.addPoint([x, y], true, true);
+          //         }, 1000);
+          //     }
+          // }
       },
       title: {
           text: 'Arduino Piped Potentiometer data'
@@ -80,3 +81,17 @@ Template.lineDemo.rendered = function() {
     buildSpline(splineData);
   });
 };
+
+// Create watch function -> take last array value and add as:
+// Highcharts.charts[0].series[0].addPoint([x, y], true, true);
+
+// from
+// set up the updating of the chart each second
+//         var series = this.series[0];
+//         console.log(this);
+//         setInterval(function () {
+//             var x = (new Date()).getTime(), // current time
+//                 y = Math.random();
+//             series.addPoint([x, y], true, true);
+//         }, 1000);
+//     }

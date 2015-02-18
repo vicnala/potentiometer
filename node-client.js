@@ -8,6 +8,15 @@ var DDPClient = require("ddp");
 var moment = require('moment');
 moment().format();
 
+// Remote connections:
+// var ddpclient = new DDPClient({
+//   host: "gw2event.meteor.com",
+//   port: 80,
+//   auto_reconnect: true,
+//   auto_reconnect_timer: 500
+// });
+// Source: https://github.com/oortcloud/node-ddp-client/issues/21
+
 // Connect to Meteor
 var ddpclient = new DDPClient({
   host: "localhost",
@@ -65,17 +74,38 @@ ddpclient.connect(function(error) {
     for (var count = 0; count < array.length; count++) {
       cleanArray[count] =  parseFloat(array[count]);
       // console.log(count + ' at: ' + cleanArray[count]);
-      if (~~cleanArray[count] === 0) {
-        // console.log("*****************NaN PROBLEM*****************");
-        countError++;
-      }
+      // if (~~cleanArray[count] === 0) {
+      //   console.log("*****************NaN PROBLEM*****************");
+      //   console.log(array[count]);
+      //   countError++;
+      // }
     }
+    if (cleanArray.length !== 10) {
+      console.log('*****************' + cleanArray + '*****************');
+      countError++;
+    }
+
+    cleanArray[10] = (new Date()).getTime();
+
+    var dataSet = {
+      User: "Kyle",
+      BikeNumber: cleanArray[0],
+      Lat: cleanArray[1],
+      Long: cleanArray[2],
+      Potentiometer: cleanArray[3],
+      x: cleanArray[10]
+    };
 
     if (countError === 0) { // no number errors
       // Call Meteor actions with "data"
-      ddpclient.call('loop', [cleanArray, schema], function(err, result) {
+      // ddpclient.call('loop', [dataSet, schema], function(err, result) {
+      //   console.log('data sent: ' + cleanArray);
+      //   console.log('called Loop function, result: ' + result);
+      //   console.log(' ');
+      // });
+      ddpclient.call('chart', [dataSet], function(err, result) {
         console.log('data sent: ' + cleanArray);
-        console.log('called Loop function, result: ' + result);
+        console.log('called chart function, result: ' + result);
         console.log(' ');
       });
     }

@@ -69,16 +69,16 @@ if (Meteor.isServer) {
   Meteor.methods({
     'chart': function (dataSet) {
       // Prepare fields to udpate MongoDB
-      var fields = {};
-      fields["data." + dataSet.BikeNumber] = dataSet.Potentiometer;
-      fields.x = dataSet.x;
-      console.log(dataSet.Potentiometer);
+      var recordedValue = {
+        x: dataSet.x,
+        y: dataSet.Potentiometer
+      };
 
       // Update MongoDB data based on bike number
       var record = lineDemo.findOne();
       lineDemo.update(
         record,
-        { $set: fields }
+        { $push: {data: recordedValue} }
       );
 
       return "ok";
