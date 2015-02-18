@@ -5,11 +5,16 @@
 
 <body>
   {{> lineDemo}}
+  <h3> &nbsp; </h3>
   <h2>Time Series Test:</h2>
-  {{> timeseries}}
+  {{> bikedataTemp}}
 </body>
 
-<template name="timeseries">
+<template name="lineDemo">
+    <div id="container-area" style="min-width: 310px; height: 400px;"></div>
+</template>
+
+<template name="bikedataTemp">
   <h3>Bike Number {{timeseries.Bike}} on Day: {{timeseries.DD}}, {{timeseries.MM}}, {{timeseries.YYYY}}</h3>
   <h4>Lat</h4>
   {{#each timeseries.Lat}}
@@ -19,10 +24,6 @@
   {{#each timeseries.Long}}
     <p>{{this}}</p>
   {{/each}}
-</template>
-
-<template name="lineDemo">
-    <div id="container-area" style="min-width: 310px; height: 400px;"></div>
 </template>
 
 

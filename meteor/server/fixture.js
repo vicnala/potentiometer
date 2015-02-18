@@ -3,7 +3,8 @@ if (Meteor.isServer) {
   // Insert database of bikes for first commit
   if (TimeSeries.find().count() === 0) {
     for (var i = 0; i < 10; i++) {
-      for (var d = 0; d < 30; d++) {
+      // for (var d = 0; d < 30; d++) {
+      var d = 1;
         var filler = [0, 1, 2, 3, 4, 5, 6, 7, 8];
         TimeSeries.insert({
           Bike: i,
@@ -15,7 +16,7 @@ if (Meteor.isServer) {
         });
       }
     }
-  }
+    // {}
 
   Meteor.methods({
     'loop': function (cleanArray, schema) {
