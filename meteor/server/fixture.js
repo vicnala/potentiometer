@@ -1,15 +1,4 @@
-TimeSeries = new Meteor.Collection('timeseries'); // Time series data
-
-// Return data for the html template
-if (Meteor.isClient) {
-  Template.timeseries.helpers({
-    timeseries: function () {
-      Session.set("currentBike", 4);
-      return TimeSeries.findOne({Bike: Session.get("currentBike"), DD: 1});
-    }
-  });
-}
-
+// potentiometer
 if (Meteor.isServer) {
   // Insert database of bikes for first commit
   if (TimeSeries.find().count() === 0) {
@@ -43,6 +32,50 @@ if (Meteor.isServer) {
       // Update MongoDB data based on bike number
       var record = TimeSeries.findOne({Bike: cleanArray[0]});
       TimeSeries.update(
+        record,
+        { $set: fields }
+      );
+
+      return "ok";
+    }
+  });
+}
+
+
+// lineDemo
+if (Meteor.isServer) {
+  if (lineDemo.find().count() === 0) {
+    console.log("Starting lineDemo with math!");
+
+    // generate an array of random data
+    var data = [],
+        time = (new Date()).getTime(),
+        i;
+
+    for (i = -19; i <= 0; i += 1) {
+        data.push({
+            x: time + i * 1000,
+            y: Math.random()
+        });
+    }
+
+    lineDemo.insert({
+        name: 'Potentiometer Data',
+        data: data
+    });
+  }
+
+  Meteor.methods({
+    'chart': function (dataSet) {
+      // Prepare fields to udpate MongoDB
+      var fields = {};
+      fields["data." + dataSet.BikeNumber] = dataSet.Potentiometer;
+      fields.x = dataSet.x;
+      console.log(dataSet.Potentiometer);
+
+      // Update MongoDB data based on bike number
+      var record = lineDemo.findOne();
+      lineDemo.update(
         record,
         { $set: fields }
       );

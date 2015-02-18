@@ -1,52 +1,24 @@
-if (Meteor.isServer) {
-  // if (AdminAreaChart.find().count() === 0) {
-  //   console.log("Starting AdminAreaChart with math!");
-  //   AdminAreaChart.insert({
-  //       name: 'Potentiometer Data',
-  //       data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
-  //   });
-  // }
-  Meteor.methods({
-    'chart': function (dataSet) {
-      // Prepare fields to udpate MongoDB
-      var fields = {};
-      fields["data." + dataSet.BikeNumber] = dataSet.Potentiometer;
-      fields.x = dataSet.x;
-      console.log(dataSet.Potentiometer);
-
-      // Update MongoDB data based on bike number
-      var record = AdminAreaChart.findOne();
-      AdminAreaChart.update(
-        record,
-        { $set: fields }
-      );
-
-      return "ok";
-    }
-  });
-}
-
-function builtArea() {
+function builtArea(BarData) {
   $('#container-area').highcharts({
       chart: {
           type: 'spline',
           animation: Highcharts.svg, // don't animate in old IE
           marginRight: 10,
-          events: {
-              load: function () {
+          // events: {
+          //     load: function () {
 
-                  // set up the updating of the chart each second
-                  var series = this.series[0];
-                  setInterval(function () {
-                      var x = (new Date()).getTime(), // current time
-                          y = Math.random();
-                      series.addPoint([x, y], true, true);
-                  }, 1000);
-              }
-          }
+          //         // set up the updating of the chart each second
+          //         var series = this.series[0];
+          //         setInterval(function () {
+          //             var x = (new Date()).getTime(), // current time
+          //                 y = Math.random();
+          //             series.addPoint([x, y], true, true);
+          //         }, 1000);
+          //     }
+          // }
       },
       title: {
-          text: 'Live random data'
+          text: 'Arduino Piped Potentiometer data'
       },
       xAxis: {
           type: 'datetime',
@@ -75,6 +47,7 @@ function builtArea() {
       exporting: {
           enabled: false
       },
+      // series: BarData
       series: [{
           name: 'Random data',
           data: (function () {
@@ -95,13 +68,15 @@ function builtArea() {
   });
 }
 
-/*
- * Call the function to built the chart when the template is rendered
- */
 if (Meteor.isClient) {
+  /*
+   * Call the function to built the chart when the template is rendered
+   */
   Template.lineDemo.rendered = function() {
-    // BarData = AdminAreaChart.findOne();
-    console.log("BarData");
-    builtArea();
+    return Meteor.subscribe("lineDemoData", function() {
+      BarData = lineDemo.findOne();
+      console.log(BarData);
+      builtArea(BarData);
+    });
   };
 }

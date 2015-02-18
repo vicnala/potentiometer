@@ -1,0 +1,1 @@
+lineDemo = new Meteor.Collection('linedemo'); // Time series data
