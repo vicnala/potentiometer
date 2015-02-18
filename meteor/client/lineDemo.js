@@ -1,5 +1,5 @@
-function builtArea(BarData) {
-  $('#container-area').highcharts({
+function buildSpline(splineData) {
+  $('#container-spline').highcharts({
       chart: {
           type: 'spline',
           animation: Highcharts.svg, // don't animate in old IE
@@ -48,9 +48,9 @@ function builtArea(BarData) {
           enabled: false
       },
       series: [{
-          name: BarData.name,
+          name: splineData.name,
           // 'Random data',
-          data: BarData.data
+          data: splineData.data
           // (function () {
           //     // generate an array of random data
           //     var data = [],
@@ -75,8 +75,8 @@ function builtArea(BarData) {
  */
 Template.lineDemo.rendered = function() {
   return Meteor.subscribe("lineDemoData", function() {
-    BarData = lineDemo.findOne();
-    // console.log(BarData);
-    builtArea(BarData);
+    splineData = lineDemo.findOne();
+    // console.log(splineData);
+    buildSpline(splineData);
   });
 };
