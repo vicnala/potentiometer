@@ -4,6 +4,7 @@
 </head>
 
 <body>
+  {{> lineDemo}}
   <h2>Time Series Test:</h2>
   {{> timeseries}}
 </body>
@@ -18,6 +19,10 @@
   {{#each timeseries.Long}}
     <p>{{this}}</p>
   {{/each}}
+</template>
+
+<template name="lineDemo">
+    <div id="container-area" style="min-width: 310px; height: 400px;"></div>
 </template>
 
 
