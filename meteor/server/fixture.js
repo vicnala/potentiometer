@@ -41,7 +41,6 @@ if (Meteor.isServer) {
   });
 }
 
-
 // lineDemo
 if (Meteor.isServer) {
   if (lineDemo.find().count() === 0) {
@@ -49,7 +48,7 @@ if (Meteor.isServer) {
 
     // generate an array of random data
     var data = [],
-        time = (new Date()).getTime(),
+        time = moment(moment().valueOf()),
         i;
 
     for (i = -19; i <= 0; i += 1) {

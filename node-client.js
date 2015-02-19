@@ -9,7 +9,7 @@ var DDPClient = require("ddp");
 var moment = require('moment');
 moment().format();
 
-// Remote connections:
+// For remote connections:
 // var ddpclient = new DDPClient({
 //   host: "gw2event.meteor.com",
 //   port: 80,
@@ -44,8 +44,6 @@ ddpclient.connect(function(error) {
   var SerialPort = serialport.SerialPort; // localize object constructor
   var serialPort = new SerialPort(currentPort, {
     baudrate: 115200,
-    // look for return and newline at the end of each data packet:
-    // parser: serialport.parsers.readline("\r\n")
     // look for ; character to signify end of line
     parser: serialport.parsers.readline(";")
   });
