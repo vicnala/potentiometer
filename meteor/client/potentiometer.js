@@ -51,12 +51,12 @@ Template.Potentiometer.rendered = function() {
         var record = lineDemo.findOne().data;
 
         // Choose only the most recent point
-        var x = record[record.length - 1].x;
-        var y = record[record.length - 1].y;
+        var x = record[record.length - 1][0];
+        var y = record[record.length - 1][1];
         // console.log([x, y]);
 
         // Add new point with animation using Highstocks API
-        Highcharts.charts[0].series[0].addPoint([x , y]);
+        Highcharts.charts[0].series[0].addPoint([x, y], true, false);
         // If you want to play around with adding new points from the console:
         // Highcharts.charts[0].series[0].addPoint([Highcharts.charts[0].series[0].data[999].x + 1000, Highcharts.charts[0].series[0].data[999].y*Math.random()+12], true, true)
       }

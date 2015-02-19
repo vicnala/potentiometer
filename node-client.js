@@ -51,6 +51,12 @@ ddpclient.connect(function(error) {
 
   function showPortOpen() { console.log('port open. Data rate: ' + serialPort.options.baudRate); }
 
+  // Used to check if a value is a number
+  // Source: http://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric/1830844#1830844
+  function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
+
   function saveLatestData(data) {
     // See what data comes through
     // console.log('data received: ' + data);
@@ -68,11 +74,11 @@ ddpclient.connect(function(error) {
       cleanArray[count] =  parseFloat(array[count]);
       // console.log(count + ' at: ' + cleanArray[count]);
       // Check for NaN error
-      // if (~~cleanArray[count] === 0) {
-      //   console.log("*****************NaN PROBLEM*****************");
-      //   console.log(array[count]);
-      //   countError++;
-      // }
+      if (!isNumber(cleanArray[count])) {
+        console.log('********NaN*********' + cleanArray + '**NaN****NaN**NaN*****NaN***NaN*');
+        countError++;
+      }
+
     }
     if (cleanArray.length !== 1) {
       console.log('*****************' + cleanArray + '*****************');

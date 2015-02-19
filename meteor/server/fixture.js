@@ -8,11 +8,11 @@ if (Meteor.isServer) {
         time = moment(moment().valueOf()),
         i;
 
-    for (i = -30; i <= 0; i += 1) {
-        data.push({
-            x: time + i * 1000,
-            y: Math.random()
-        });
+    for (i = -9999; i <= 0; i += 1) {
+        data.push([
+            time + i * 1000,
+            Math.random()
+        ]);
     }
 
     lineDemo.insert({
@@ -24,10 +24,10 @@ if (Meteor.isServer) {
   Meteor.methods({
     'chart': function (dataSet) {
       // Prepare fields to udpate MongoDB
-      var recordedValue = {
-        x: dataSet.x,
-        y: dataSet.Potentiometer
-      };
+      var recordedValue = [
+        dataSet.x,
+        dataSet.Potentiometer
+      ];
 
       // Update MongoDB data based on bike number
       var record = lineDemo.findOne();
