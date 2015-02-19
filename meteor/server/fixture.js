@@ -49,7 +49,7 @@ if (Meteor.isServer) {
 
     // generate an array of random data
     var data = [],
-        time = (new Date()).getTime(),
+        time = (new Date()).getTime().zone("-05:00"),
         i;
 
     for (i = -19; i <= 0; i += 1) {

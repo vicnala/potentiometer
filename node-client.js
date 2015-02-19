@@ -86,7 +86,7 @@ ddpclient.connect(function(error) {
       countError++;
     }
 
-    cleanArray[10] = (new Date()).getTime();
+    cleanArray[10] = (new Date()).getTime().zone("-05:00");
 
     var dataSet = {
       User: "Kyle",
