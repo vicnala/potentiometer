@@ -1,3 +1,10 @@
+// .last(num) call to slice array for given length
+if (!Array.prototype.last){
+    Array.prototype.last = function(num){
+      return this.slice(this.length - num, this.length);
+    };
+}
+
 function buildSpline(splineData) {
   $('#container-spline').highcharts({
       chart: {
@@ -50,7 +57,8 @@ function buildSpline(splineData) {
       series: [{
           name: splineData.name,
           // 'Random data',
-          data: splineData.data.last(20)
+          data: splineData.data
+          // data: splineData.data.last(20)
           // (function () {
           //     // generate an array of random data
           //     var data = [],
@@ -73,24 +81,36 @@ function buildSpline(splineData) {
 /*
  * Call the function to built the chart when the template is rendered
  */
-if (!Array.prototype.last){
-    Array.prototype.last = function(num){
-      temp = this.slice(this.length - num, this.length);
-      return temp;
-    };
-}
-
 Template.lineDemo.rendered = function() {
   return Meteor.subscribe("lineDemoData", function() {
-    // Meteor.autorun(function() { // refreshes every few seconds
     splineData = lineDemo.findOne();
     // splineData = lineDemo.find( {}, { data: { $slice: -1 } } ).fetch();
     console.log(splineData);
     buildSpline(splineData);
     // buildSpline(splineData[0]);
-    // });
+
+
+  Meteor.autorun(function() { // refreshes every few seconds
+    var handle = lineDemo.find({}).observeChanges({
+      changed: function (id) {
+        var record = lineDemo.findOne().data;
+        var x = record[record.length - 1].x;
+        var y = record[record.length - 1].y;
+        console.log([x, y]);
+        Highcharts.charts[0].series[0].addPoint([x , y], true, true);
+      }
+
+      //   if (!initializing)
+      //     self.changed("counts", roomId, {count: count});
+      // }
+      // removed: function (id) {
+      // don't care about changed
+    });
+  });
+  // Highcharts.charts[0].series[0].addPoint([Highcharts.charts[0].series[0].data[19].x + 1000, Highcharts.charts[0].series[0].data[19].y*Math.random()+12], true, true)
   });
 };
+
 
 // Create watch function -> take last array value and add as:
 // Highcharts.charts[0].series[0].addPoint([x, y], true, true);
