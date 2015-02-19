@@ -1,10 +1,22 @@
 // Name serial port - there should be a smarter way to do this, but this seems easiest
 // var currentPort = "/dev/ttyACM0"; // A PC serial port
-// var currentPort = "/dev/cu.usbmodem" + "1411"; // direct left port
+var currentPort = "/dev/cu.usbmodem" + "1411"; // direct left port
 // var currentPort = "/dev/cu.usbmodem" + "1421"; // direct right port
-var currentPort = "/dev/cu.usbmodem" + "14211"; // indirect right port: closest to aux power
+// var currentPort = "/dev/cu.usbmodem" + "14211"; // indirect right port: closest to aux power
 
 var DDPClient = require("ddp");
+
+var moment = require('moment');
+moment().format();
+
+// Remote connections:
+// var ddpclient = new DDPClient({
+//   host: "gw2event.meteor.com",
+//   port: 80,
+//   auto_reconnect: true,
+//   auto_reconnect_timer: 500
+// });
+// Source: https://github.com/oortcloud/node-ddp-client/issues/21
 
 // Connect to Meteor
 var ddpclient = new DDPClient({
@@ -33,23 +45,72 @@ ddpclient.connect(function(error) {
   var serialPort = new SerialPort(currentPort, {
     baudrate: 115200,
     // look for return and newline at the end of each data packet:
-    parser: serialport.parsers.readline("\r\n")
+    // parser: serialport.parsers.readline("\r\n")
+    // look for ; character to signify end of line
+    parser: serialport.parsers.readline(";")
   });
 
   function showPortOpen() { console.log('port open. Data rate: ' + serialPort.options.baudRate); }
   function saveLatestData(data) {
     // See what data comes through
-    console.log('data received: ' + data);
+    // console.log('data received: ' + data);
     var array = data.split(','); // CSV Data Parse:
     // Print each parsed data
+    var schema = ['Bike Number', 'Lat', 'Long', 'Potentiometer', "time (s)", "time (mm)", "time (HH)", "time (DD)", "time (MM)", "time (YYYY)"];
     for (var i = 0; i < array.length; i++) {
-       console.log('data point ' + i + ' parsed: ' + array[i]);
+       // console.log(i + ' = ' + schema[i] + ' : ' + array[i]);
     }
 
-    // Call Meteor actions with "data"
-    ddpclient.call('loop', [array], function(err, result) {
-      console.log('called Loop function, result: ' + result);
-    });
+    // Get current time data
+    var testTime = moment().format("ss-mm-HH-DD-MM-YYYY");
+    var splitTime = testTime.split('-'); // dash date data parse
+    for (var t = 0; t < splitTime.length; t++) {
+      // console.log(t + ' = ' + splitTime[t]);
+      array.push(splitTime[t]); // Extend the array:
+    }
+
+    // Clean up string array into a set of numbers and account for any NaN conversion issues:
+    var cleanArray = [];
+    var countError = 0;
+    for (var count = 0; count < array.length; count++) {
+      cleanArray[count] =  parseFloat(array[count]);
+      // console.log(count + ' at: ' + cleanArray[count]);
+      // if (~~cleanArray[count] === 0) {
+      //   console.log("*****************NaN PROBLEM*****************");
+      //   console.log(array[count]);
+      //   countError++;
+      // }
+    }
+    if (cleanArray.length !== 10) {
+      console.log('*****************' + cleanArray + '*****************');
+      countError++;
+    }
+
+    cleanArray[10] = (new Date()).getTime();
+
+    var dataSet = {
+      User: "Kyle",
+      BikeNumber: cleanArray[0],
+      Lat: cleanArray[1],
+      Long: cleanArray[2],
+      Potentiometer: cleanArray[3],
+      x: cleanArray[10]
+    };
+
+    if (countError === 0) { // no number errors
+      // Call Meteor actions with "data"
+      // ddpclient.call('loop', [dataSet, schema], function(err, result) {
+      //   console.log('data sent: ' + cleanArray);
+      //   console.log('called Loop function, result: ' + result);
+      //   console.log(' ');
+      // });
+      ddpclient.call('chart', [dataSet], function(err, result) {
+        console.log('data sent: ' + cleanArray);
+        console.log('called chart function, result: ' + result);
+        console.log(' ');
+      });
+    }
+
   }
 
   // Error Checking
