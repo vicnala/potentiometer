@@ -123,6 +123,12 @@ function buildSpline(splineData) {
 // Call the function to built the chart when the template is rendered
 Template.lineDemo.rendered = function() {
   return Meteor.subscribe("lineDemoData", function() {
+    Highcharts.setOptions({
+      global: {
+        useUTC: false
+      }
+    });
+
     // var currentTime = (new Date()).getTime();
     // var limitTime = currentTime - 20*1000;
     splineData = lineDemo.findOne();
