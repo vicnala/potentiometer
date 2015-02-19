@@ -11,7 +11,10 @@ function buildSpline(splineData) {
       chart: {
           type: 'spline',
           animation: Highcharts.svg, // don't animate in old IE
-          marginRight: 10
+          marginRight: 10,
+          zoomType: 'x',
+          panning: true,
+          panKey: 'shift'
       },
       title: {
           text: 'Arduino Piped Potentiometer data'
@@ -53,8 +56,9 @@ function buildSpline(splineData) {
 // Call the function to built the chart when the template is rendered
 Template.lineDemo.rendered = function() {
   return Meteor.subscribe("lineDemoData", function() {
+    // var currentTime = (new Date()).getTime();
+    // var limitTime = currentTime - 20*1000;
     splineData = lineDemo.findOne();
-    console.log(splineData);
     buildSpline(splineData);
 
     // Watch function -> take last array value and add new point reaplcing oldest point
