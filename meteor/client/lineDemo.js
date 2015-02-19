@@ -7,7 +7,7 @@ function buildSpline(splineData) {
         //             // set up the updating of the chart each second
         //             var series = this.series[0];
         //             setInterval(function () {
-        //                 var x = (new Date()).getTime().zone("-05:00"), // current time
+        //                 var x = (new Date()).getTime(), // current time
         //                     y = Math.round(Math.random() * 100);
         //                 series.addPoint([x, y], true, true);
         //             }, 1000);
@@ -19,11 +19,11 @@ function buildSpline(splineData) {
             buttons: [{
                 count: 1,
                 type: 'minute',
-                text: '1M'
+                text: '1 min'
             }, {
                 count: 5,
                 type: 'minute',
-                text: '5M'
+                text: '5 min'
             }, {
                 type: 'all',
                 text: 'All'
@@ -48,7 +48,7 @@ function buildSpline(splineData) {
         //     name : 'Random data',
         //     data : (function () {
         //         // generate an array of random data
-        //         var data = [], time = (new Date()).getTime().zone("-05:00"), i;
+        //         var data = [], time = (new Date()).getTime(), i;
 
         //         for (i = -999; i <= 0; i += 1) {
         //             data.push([
@@ -123,7 +123,7 @@ function buildSpline(splineData) {
 // Call the function to built the chart when the template is rendered
 Template.lineDemo.rendered = function() {
   return Meteor.subscribe("lineDemoData", function() {
-    // var currentTime = (new Date()).getTime().zone("-05:00");
+    // var currentTime = (new Date()).getTime();
     // var limitTime = currentTime - 20*1000;
     splineData = lineDemo.findOne();
     buildSpline(splineData);
