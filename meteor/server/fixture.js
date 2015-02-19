@@ -16,7 +16,6 @@ if (Meteor.isServer) {
         });
       }
     }
-    // {}
 
   Meteor.methods({
     'loop': function (cleanArray, schema) {

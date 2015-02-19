@@ -9,7 +9,6 @@ function buildSpline(splineData) {
 
           //         // set up the updating of the chart each second
           //         var series = this.series[0];
-          //         console.log(this);
           //         setInterval(function () {
           //             var x = (new Date()).getTime(), // current time
           //                 y = Math.random();
@@ -39,7 +38,7 @@ function buildSpline(splineData) {
           formatter: function () {
               return '<b>' + this.series.name + '</b><br/>' +
                   Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                  Highcharts.numberFormat(this.y, 2);
+                  Highcharts.numberFormat('P-Value: ', this.y, 2);
           }
       },
       legend: {
@@ -51,7 +50,7 @@ function buildSpline(splineData) {
       series: [{
           name: splineData.name,
           // 'Random data',
-          data: splineData.data
+          data: splineData.data.last(20)
           // (function () {
           //     // generate an array of random data
           //     var data = [],
@@ -74,11 +73,22 @@ function buildSpline(splineData) {
 /*
  * Call the function to built the chart when the template is rendered
  */
+if (!Array.prototype.last){
+    Array.prototype.last = function(num){
+      temp = this.slice(this.length - num, this.length);
+      return temp;
+    };
+}
+
 Template.lineDemo.rendered = function() {
   return Meteor.subscribe("lineDemoData", function() {
+    // Meteor.autorun(function() { // refreshes every few seconds
     splineData = lineDemo.findOne();
-    // console.log(splineData);
+    // splineData = lineDemo.find( {}, { data: { $slice: -1 } } ).fetch();
+    console.log(splineData);
     buildSpline(splineData);
+    // buildSpline(splineData[0]);
+    // });
   });
 };
 
