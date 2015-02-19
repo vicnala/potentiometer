@@ -19,11 +19,11 @@ function buildSpline(splineData) {
             buttons: [{
                 count: 1,
                 type: 'minute',
-                text: '1M'
+                text: '1 min'
             }, {
                 count: 5,
                 type: 'minute',
-                text: '5M'
+                text: '5 min'
             }, {
                 type: 'all',
                 text: 'All'
