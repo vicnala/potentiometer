@@ -6,6 +6,7 @@ var currentPort = "/dev/cu.usbmodem" + "14211"; // indirect right port: closest 
 
 var DDPClient = require("ddp");
 
+// For handling time data
 var moment = require('moment');
 moment().format();
 
@@ -32,7 +33,7 @@ var ddpclient = new DDPClient({
 });
 
 ddpclient.connect(function(error) {
-  // Error Checking
+  // Confirm DDP/Meteor Connection
   if (error) {
     console.log('DDP connection error!');
     return;
@@ -49,22 +50,15 @@ ddpclient.connect(function(error) {
   });
 
   function showPortOpen() { console.log('port open. Data rate: ' + serialPort.options.baudRate); }
+
   function saveLatestData(data) {
     // See what data comes through
     // console.log('data received: ' + data);
     var array = data.split(','); // CSV Data Parse:
     // Print each parsed data
-    var schema = ['Bike Number', 'Lat', 'Long', 'Potentiometer', "time (s)", "time (mm)", "time (HH)", "time (DD)", "time (MM)", "time (YYYY)"];
+    var schema = ['Potentiometer'];
     for (var i = 0; i < array.length; i++) {
        // console.log(i + ' = ' + schema[i] + ' : ' + array[i]);
-    }
-
-    // Get current time data
-    var testTime = moment().format("ss-mm-HH-DD-MM-YYYY");
-    var splitTime = testTime.split('-'); // dash date data parse
-    for (var t = 0; t < splitTime.length; t++) {
-      // console.log(t + ' = ' + splitTime[t]);
-      array.push(splitTime[t]); // Extend the array:
     }
 
     // Clean up string array into a set of numbers and account for any NaN conversion issues:
@@ -73,35 +67,28 @@ ddpclient.connect(function(error) {
     for (var count = 0; count < array.length; count++) {
       cleanArray[count] =  parseFloat(array[count]);
       // console.log(count + ' at: ' + cleanArray[count]);
+      // Check for NaN error
       // if (~~cleanArray[count] === 0) {
       //   console.log("*****************NaN PROBLEM*****************");
       //   console.log(array[count]);
       //   countError++;
       // }
     }
-    if (cleanArray.length !== 10) {
+    if (cleanArray.length !== 1) {
       console.log('*****************' + cleanArray + '*****************');
       countError++;
     }
 
-    cleanArray[10] = (new Date()).getTime();
+    // Get current time data
+    cleanArray[1] = (new Date()).getTime();
 
+    // Create JS object to pass to Meteor
     var dataSet = {
-      User: "Kyle",
-      BikeNumber: cleanArray[0],
-      Lat: cleanArray[1],
-      Long: cleanArray[2],
-      Potentiometer: cleanArray[3],
-      x: cleanArray[10]
+      Potentiometer: cleanArray[0],
+      x: cleanArray[1]
     };
 
     if (countError === 0) { // no number errors
-      // Call Meteor actions with "data"
-      // ddpclient.call('loop', [dataSet, schema], function(err, result) {
-      //   console.log('data sent: ' + cleanArray);
-      //   console.log('called Loop function, result: ' + result);
-      //   console.log(' ');
-      // });
       ddpclient.call('chart', [dataSet], function(err, result) {
         console.log('data sent: ' + cleanArray);
         console.log('called chart function, result: ' + result);

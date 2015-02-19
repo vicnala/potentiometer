@@ -4,26 +4,11 @@
 </head>
 
 <body>
-  {{> lineDemo}}
-  <!-- <h3> &nbsp; </h3>
-  <h2>Time Series Test:</h2>
-  {{> bikedataTemp}} -->
+  {{> Potentiometer}}
 </body>
 
-<template name="lineDemo">
+<template name="Potentiometer">
     <div id="container-spline" style="min-width: 310px; height: 400px;"></div>
-</template>
-
-<template name="bikedataTemp">
-  <h3>Bike Number {{timeseries.Bike}} on Day: {{timeseries.DD}}, {{timeseries.MM}}, {{timeseries.YYYY}}</h3>
-  <h4>Lat</h4>
-  {{#each timeseries.Lat}}
-    <p>{{this}}</p>
-  {{/each}}
-  <h4>Long</h4>
-  {{#each timeseries.Long}}
-    <p>{{this}}</p>
-  {{/each}}
 </template>
 
 
