@@ -2,13 +2,13 @@ function buildHighStocksPlot(splineData) {
     $('#container-spline').highcharts('StockChart', {
         rangeSelector: {
             buttons: [{
-                count: 0.5,
-                type: 'minute',
-                text: '0.5 m'
-            }, {
                 count: 1,
                 type: 'minute',
                 text: '1 min'
+            }, {
+                count: 3,
+                type: 'minute',
+                text: '3 min'
             }, {
                 type: 'all',
                 text: 'All'

@@ -12,6 +12,7 @@ void setup()
 
 void loop()
 {
+  stringOutput = "";
   val = analogRead(2);
   stringOutput += val;
   stringOutput += ";"; // dataset break
