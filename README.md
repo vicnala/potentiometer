@@ -1,7 +1,9 @@
 Potentiometer
 =============
 
-A simple proof of concept of Meteor with electronics
+A simple proof of concept of Meteor with electronics, see this demo:
+
+![Demo data graph](README IMAGEs/demo.png)
 
 Arduino
 =======

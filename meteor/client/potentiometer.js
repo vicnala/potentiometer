@@ -6,10 +6,6 @@ function buildHighStocksPlot(splineData) {
                 type: 'minute',
                 text: '1 min'
             }, {
-                count: 3,
-                type: 'minute',
-                text: '3 min'
-            }, {
                 type: 'all',
                 text: 'All'
             }],
@@ -18,7 +14,7 @@ function buildHighStocksPlot(splineData) {
         },
 
         title : {
-            text : 'Live random data'
+            text : 'Live Arduino-Piped Data'
         },
 
         exporting: {
