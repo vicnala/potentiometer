@@ -10,7 +10,7 @@ Connect a potentiometer to your [Arduino](http://www.arduino.cc/) board.
 
 ![Connecting a potentiometer to Arduino and Servo](README IMAGEs/wiring.png)
 
-Then upload the Arduino sketch `arduino/node_serial_client/node_serial_client.ino`:
+Then upload the Arduino sketch `node_serial_client.ino`:
 
 Meteor
 ======
@@ -21,17 +21,11 @@ To install Meteor run:
 $ curl https://install.meteor.com | sh
 ~~~
 
-Now create the `potentiometer` Meteor project:
-
-~~~bash
-$ meteor create potentiometer
-~~~
-
 Run the Meteor app
 ------------------
 
 ~~~bash
-$ cd potentiometer
+$ cd potentiometer/meteor
 $ meteor
 ~~~
 
@@ -48,18 +42,10 @@ Install Node.js
 
 Go to the [Node download site](http://nodejs.org/download/).
 
-Create a directory for the gateway
-----------------------------------
-
-~~~bash
-$ mkdir gateway
-~~~
-
 Install node required packages
 ------------------------------
 
 ~~~bash
-$ cd gateway
 $ npm install ddp
 $ npm install serialport
 ~~~
@@ -74,7 +60,6 @@ Run the Node app
 ----------------
 
 ~~~bash
-$ cd gateway
 $ node node-client.js
 ~~~
 
